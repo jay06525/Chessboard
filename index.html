@@ -1,55 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chessboard Test</title>
-    <style>
-        /* CSS for Chessboard */
-        .chessboard {
-            display: grid;
-            grid-template-columns: repeat(8, 50px);
-            grid-template-rows: repeat(8, 50px);
-            margin: 20px auto;
-            border: 2px solid #333;
-            width: 400px;
-            height: 400px;
-        }
-        .chessboard div {
-            width: 50px;
-            height: 50px;
-        }
-        .chessboard .white {
-            background: #f0d9b5;
-        }
-        .chessboard .black {
-            background: #b58863;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chessboard Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
 </head>
 <body>
     <h1>Chessboard Example</h1>
-    <div id="board" class="chessboard"></div>
+    <div id="board" style="width: 400px"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
     <script>
-        // JavaScript for Chessboard
-        (function() {
-            const boardElement = document.getElementById('board');
-
-            const createBoard = (element) => {
-                const squares = 64;
-                for (let i = 0; i < squares; i++) {
-                    const square = document.createElement('div');
-                    const isBlack = (i + Math.floor(i / 8)) % 2;
-                    square.className = isBlack ? 'black' : 'white';
-                    element.appendChild(square);
-                }
-            };
-
-            createBoard(boardElement);
-        })();
+        $(document).ready(function() {
+            var board = Chessboard('board', {
+                draggable: true,
+                dropOffBoard: 'trash',
+                sparePieces: true
+            });
+        });
     </script>
 </body>
 </html>
-
-
