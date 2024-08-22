@@ -3,13 +3,33 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Test Page</title>
+    <title>Chessboard Example</title>
+    <style>
+        body {
+            background-color: #2f4f82;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+    <!-- Chessboard.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css" />
 </head>
 <body>
-    <div id="board" style="width: 400px; height: 400px; background-color: lightgray;"></div>
+    <div id="board" style="width: 400px;"></div>
 
+    <!-- Chessboard.js JavaScript -->
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.js"></script>
+    
     <script type="text/javascript">
-      console.log('JavaScript is running');
+        var board = Chessboard('board', {
+            pieceTheme: 'https://raw.githubusercontent.com/your-username/your-repo/main/Chessboard/img/chesspieces/wikipedia/{piece}.png',
+            position: 'start'
+        });
     </script>
 </body>
 </html>
