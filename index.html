@@ -1,24 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chessboard Example</title>
-    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <style>
+        body {
+            background-color: #2f4f82;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+    <!-- Chessboard.js CSS -->
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/jay06525/Chessboard/main/path-to-your-chessboardjs.css" />
 </head>
 <body>
-    <h1>Chessboard Jay Example</h1>
-    <div id="board" style="width: 400px"></div>
+    <div id="board" style="width: 400px;"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var board = Chessboard('board', {
-                draggable: true,
-                dropOffBoard: 'trash',
-                sparePieces: true
-            });
+    <!-- Chessboard.js JavaScript -->
+    <script src="https://raw.githubusercontent.com/jay06525/Chessboard/main/path-to-your-chessboardjs.js"></script>
+    
+    <script type="text/javascript">
+        var board = Chessboard('board', {
+            pieceTheme: 'https://raw.githubusercontent.com/jay06525/Chessboard/main/img/chesspieces/{piece}.png',
+            position: 'start'
         });
     </script>
 </body>
