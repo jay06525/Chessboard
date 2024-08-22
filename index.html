@@ -21,19 +21,90 @@
 
     <!-- Chessboard.js CSS -->
     <link rel="stylesheet" href="https://jay06525.github.io/Chessboard/chessboard-1.0.0.css" />
+
+    <!-- Chessboard.js JavaScript -->
+    <script src="https://jay06525.github.io/Chessboard/chessboard-1.0.0.js"></script>
+
+    <!-- Chess.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.0/chess.min.js"></script>
 </head>
 <body>
     <div id="board" style="width: 400px;"></div>
 
-    <!-- Chessboard.js JavaScript -->
-    <script src="https://jay06525.github.io/Chessboard/chessboard-1.0.0.js"></script>
-    
     <script type="text/javascript">
-        var board = Chessboard('board', {
+        var board,
+            game = new Chess('4r1k1/3b1Nbp/1q1p2p1/p1pQ4/2B2p2/2n5/PP3PPP/2KR1R2 w - - 2 25');  // Initialize chess.js with your FEN
+
+        function onDragStart(source, piece, position, orientation) {
+            // do not pick up pieces if the game is over
+            if (game.game_over()) return false;
+
+            // only pick up pieces for the side to move
+            if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+                (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+                return false;
+            }
+        }
+
+        function onDrop(source, target) {
+            // see if the move is legal
+            var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q' // note: always promote to a queen for simplicity
+            });
+
+            // illegal move
+            if (move === null) return 'snapback';
+
+            updateStatus();
+        }
+
+        function onSnapEnd() {
+            board.position(game.fen());
+        }
+
+        function updateStatus() {
+            var status = '';
+
+            var moveColor = 'White';
+            if (game.turn() === 'b') {
+                moveColor = 'Black';
+            }
+
+            // checkmate?
+            if (game.in_checkmate()) {
+                status = 'Game over, ' + moveColor + ' is in checkmate.';
+            }
+
+            // draw?
+            else if (game.in_draw()) {
+                status = 'Game over, drawn position';
+            }
+
+            // game still on
+            else {
+                status = moveColor + ' to move';
+
+                // check?
+                if (game.in_check()) {
+                    status += ', ' + moveColor + ' is in check';
+                }
+            }
+
+            console.log(status);
+        }
+
+        board = Chessboard('board', {
             pieceTheme: 'https://jay06525.github.io/Chessboard/img/chesspieces/{piece}.png',
-            position: '4r1k1/3b1Nbp/1q1p2p1/p1pQ4/2B2p2/2n5/PP3PPP/2KR1R2 w - - 2 25', // Your FEN position
-            draggable: true // Allow users to move pieces
+            position: game.fen(),  // Use the FEN from the chess.js game
+            draggable: true,
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd
         });
+
+        updateStatus();
     </script>
 </body>
 </html>
